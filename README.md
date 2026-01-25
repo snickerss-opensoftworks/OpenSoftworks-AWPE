@@ -1,2 +1,3 @@
 # OpenSoftworks-AWPE
-AWPE Scripthub made by OpenSoftworks, yes it is Open Source lol.
+
+### AWPE is just a Rayfield library but for alot of games, each game is in the Games folder!
