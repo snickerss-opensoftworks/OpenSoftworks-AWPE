@@ -1,6 +1,6 @@
 --[[
-	Made by Snickers (sinfulf3dd on discord)
-	Custom Key System using Cloudflare so u can DDOS if u want idrc tbh, yes it uses ur HWID for ur key so u can find a bypass as i dont care lmao. Just try it out and give feedback in the server!
+    Made by Snickers (sinfulf3dd on discord)
+    Custom Key System using Cloudflare so u can DDOS if u want idrc tbh, yes it uses ur HWID for ur key so u can find a bypass as i dont care lmao. Just try it out and give feedback in the server!
 ]]
 
 local rf = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
@@ -32,22 +32,15 @@ local function intro()
 
     local bg = Instance.new("Frame")
     bg.Size = UDim2.fromScale(1,1)
-    bg.BackgroundColor3 = Color3.fromRGB(5,5,5)
+    bg.BackgroundColor3 = Color3.fromRGB(12,12,12)
     bg.BorderSizePixel = 0
+    bg.BackgroundTransparency = 1
     bg.Parent = g
-
-    local grad = Instance.new("UIGradient")
-    grad.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(10,10,10)),
-        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(120,0,0)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(10,10,10))
-    })
-    grad.Parent = bg
 
     local img = Instance.new("ImageLabel")
     img.AnchorPoint = Vector2.new(0.5,0.5)
-    img.Position = UDim2.fromScale(0.5,0.42)
-    img.Size = UDim2.fromScale(0.18,0.18)
+    img.Position = UDim2.fromScale(0.5,0.45)
+    img.Size = UDim2.fromScale(0.16,0.16)
     img.BackgroundTransparency = 1
     img.Image = logo
     img.ImageTransparency = 1
@@ -56,10 +49,10 @@ local function intro()
     local txt = Instance.new("TextLabel")
     txt.AnchorPoint = Vector2.new(0.5,0.5)
     txt.Position = UDim2.fromScale(0.5,0.58)
-    txt.Size = UDim2.fromScale(1,0.08)
+    txt.Size = UDim2.fromScale(1,0.06)
     txt.BackgroundTransparency = 1
-    txt.Text = "awpe loading"
-    txt.Font = Enum.Font.GothamBold
+    txt.Text = "AWPE"
+    txt.Font = Enum.Font.GothamMedium
     txt.TextScaled = true
     txt.TextColor3 = Color3.fromRGB(220,220,220)
     txt.TextTransparency = 1
@@ -67,56 +60,46 @@ local function intro()
 
     local bb = Instance.new("Frame")
     bb.AnchorPoint = Vector2.new(0.5,0.5)
-    bb.Position = UDim2.fromScale(0.5,0.68)
-    bb.Size = UDim2.fromScale(0.35,0.015)
-    bb.BackgroundColor3 = Color3.fromRGB(25,25,25)
+    bb.Position = UDim2.fromScale(0.5,0.66)
+    bb.Size = UDim2.fromScale(0.32,0.012)
+    bb.BackgroundColor3 = Color3.fromRGB(28,28,28)
     bb.BorderSizePixel = 0
-    bb.Parent = bg
+    bb.BackgroundTransparency = 1
+    bb.Parent = g
     Instance.new("UICorner", bb).CornerRadius = UDim.new(1,0)
 
     local bf = Instance.new("Frame")
     bf.Size = UDim2.fromScale(0,1)
-    bf.BackgroundColor3 = Color3.fromRGB(200,40,40)
+    bf.BackgroundColor3 = Color3.fromRGB(200,200,200)
     bf.BorderSizePixel = 0
     bf.Parent = bb
     Instance.new("UICorner", bf).CornerRadius = UDim.new(1,0)
 
-    ts:Create(bl, TweenInfo.new(0.6), {Size = 20}):Play()
-    ts:Create(img, TweenInfo.new(0.8), {ImageTransparency = 0}):Play()
-    ts:Create(txt, TweenInfo.new(0.8), {TextTransparency = 0.1}):Play()
-
-    local a = 0
-    local s = 1
-
-    local c
-    c = rs.RenderStepped:Connect(function(dt)
-        a += dt * 60
-        grad.Rotation = a
-        s += dt * 2
-        local sc = 1 + math.sin(s) * 0.04
-        img.Size = UDim2.fromScale(0.18 * sc, 0.18 * sc)
-    end)
+    ts:Create(bl, TweenInfo.new(0.6), {Size = 16}):Play()
+    ts:Create(bg, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+    ts:Create(bb, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+    ts:Create(img, TweenInfo.new(0.6), {ImageTransparency = 0}):Play()
+    ts:Create(txt, TweenInfo.new(0.6), {TextTransparency = 0.15}):Play()
 
     local function step(v,t)
-        ts:Create(bf, TweenInfo.new(t, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+        ts:Create(bf, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
             Size = UDim2.fromScale(v,1)
         }):Play()
-        task.wait(t + 0.05)
+        task.wait(t + 0.08)
     end
 
-    step(0.2,0.4)
-    step(0.45,0.5)
-    step(0.7,0.45)
-    step(0.9,0.35)
-    step(1,0.3)
+    step(0.25,0.5)
+    step(0.5,0.55)
+    step(0.75,0.45)
+    step(1,0.4)
 
-    ts:Create(bg, TweenInfo.new(0.7), {BackgroundTransparency = 1}):Play()
-    ts:Create(img, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
-    ts:Create(txt, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
-    ts:Create(bl, TweenInfo.new(0.7), {Size = 0}):Play()
+    ts:Create(bg, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
+    ts:Create(bb, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
+    ts:Create(img, TweenInfo.new(0.4), {ImageTransparency = 1}):Play()
+    ts:Create(txt, TweenInfo.new(0.4), {TextTransparency = 1}):Play()
+    ts:Create(bl, TweenInfo.new(0.5), {Size = 0}):Play()
 
-    task.wait(0.8)
-    if c then c:Disconnect() end
+    task.wait(0.55)
     bl:Destroy()
     g:Destroy()
 end
@@ -125,6 +108,8 @@ intro()
 
 local w = rf:CreateWindow({
     Name = "AWPE | Premier Hub",
+    Theme = "Dark",
+    ToggleUIKeybind = Enum.KeyCode.RightShift,
     LoadingTitle = "AWPE",
     LoadingSubtitle = "by SoulZXZX",
     ConfigurationSaving = {
@@ -152,16 +137,17 @@ local s = {
     alk = 0.15,
     ep = false,
     spd = 16,
-    jp = 50
+    jp = 50,
+    th = "Dark"
 }
 
 local t1 = w:CreateTab("Main", 4483362458)
 local t2 = w:CreateTab("Visual", 4483362458)
 local t3 = w:CreateTab("Misc", 4483362458)
 local t4 = w:CreateTab("Config", 4483362458)
+local t5 = w:CreateTab("UI", 4483362458)
 
 t1:CreateSection("Aimbot")
-
 t1:CreateToggle({Name="Active",CurrentValue=false,Callback=function(v) s.ae=v end})
 t1:CreateDropdown({Name="Target",Options={"Head","HumanoidRootPart"},CurrentOption={"Head"},Callback=function(v) s.ap=v[1] end})
 t1:CreateSlider({Name="Smooth",Range={1,20},Increment=1,CurrentValue=2,Callback=function(v) s.as=v end})
@@ -179,6 +165,19 @@ t3:CreateSlider({Name="JumpPower",Range={50,500},Increment=1,CurrentValue=50,Cal
 t4:CreateSection("Settings")
 t4:CreateButton({Name="Save Config",Callback=function() rf:SaveConfiguration() end})
 t4:CreateButton({Name="Unload",Callback=function() rf:Destroy() end})
+
+t5:CreateSection("Interface")
+t5:CreateDropdown({
+    Name = "Theme",
+    Options = {"Dark","Light","Ocean","Amber","Green","Red"},
+    CurrentOption = {"Dark"},
+    Callback = function(v)
+        s.th = v[1]
+        pcall(function()
+            rf:ChangeTheme(s.th)
+        end)
+    end
+})
 
 local circ = Drawing.new("Circle")
 circ.Thickness = 1
@@ -238,8 +237,8 @@ rs.Heartbeat:Connect(function()
                 if not h then
                     h = Instance.new("Highlight", p.Character)
                     h.Name = "aw_h"
-                    h.FillColor = Color3.fromRGB(30,30,30)
-                    h.OutlineColor = Color3.fromRGB(200,0,0)
+                    h.FillColor = Color3.fromRGB(35,35,35)
+                    h.OutlineColor = Color3.fromRGB(180,180,180)
                     h.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
                 end
             elseif h then
