@@ -1,3 +1,7 @@
 # OpenSoftworks-AWPE
 
-### AWPE is just a Rayfield library but for alot of games, each game is in the Games folder!
+[\] AWPE is basically a Rayfield-style UI library made for a lot of games.  
+Each game is inside the Games folder.
+
+[/] Key System  
+https://awpe.monyephoyn.workers.dev/
