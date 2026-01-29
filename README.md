@@ -15,3 +15,22 @@ Last Run: https://www.roblox.com/games/137604575642443/Last-Run
 
 Lucky Blocks Battlegrounds: https://www.roblox.com/games/662417684/LUCKY-BLOCKS-Battlegrounds
 ```
+
+## Specific game scripts:
+```lua
+--Town:
+loadstring(game:HttpGet("https://raw.githubusercontent.com/snickerss-opensoftworks/OpenSoftworks-AWPE/refs/heads/main/Games/Town.lua"))()
+
+-- Last Run:
+loadstring(game:HttpGet("https://raw.githubusercontent.com/snickerss-opensoftworks/OpenSoftworks-AWPE/refs/heads/main/Games/LastRun.lua"))()
+
+-- Lucky Blocks Battlegrounds:
+loadstring(game:HttpGet("https://raw.githubusercontent.com/snickerss-opensoftworks/OpenSoftworks-AWPE/refs/heads/main/Games/LuckyBlocks.lua"))()
+```
+
+## Universal scripts:
+
+```lua
+-- NetworkOwnership (Unanchored part abuse)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/snickerss-opensoftworks/OpenSoftworks-AWPE/refs/heads/main/Games/NetworkOwnershipBETA.lua"))()
+```
