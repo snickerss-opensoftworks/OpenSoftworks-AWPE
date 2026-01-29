@@ -6,6 +6,9 @@ Each game is inside the Games folder.
 [/] Key System  
 [Click this boi](https://awpe.monyephoyn.workers.dev/)
 
+[/] Discord server
+https://discord.gg/cumm
+
 ## Current games supported.
 
 ```css
