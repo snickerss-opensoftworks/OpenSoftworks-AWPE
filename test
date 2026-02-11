@@ -1,0 +1,1 @@
+local helloworld = print local _print = "hello world!" helloworld(_print)
