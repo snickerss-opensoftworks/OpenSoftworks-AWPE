@@ -6,8 +6,10 @@ Each game is inside the Games folder.
 [/] Key System  
 [Click this boi](https://awpe.monyephoyn.workers.dev/)
 
-[/] Discord server
-https://discord.gg/cumm
+Hub Loadstring (finally done after 2 months bc i lwk had to focus on school and allat)
+```luau
+loadstring(game:HttpGet("https://raw.githubusercontent.com/snickerss-opensoftworks/OpenSoftworks-AWPE/refs/heads/main/main_obf_392042KF_oirS3674.lua"))()
+```
 
 ## Current games supported.
 
