@@ -1,1 +1,183 @@
+-- CN-NotifLib | snickerss-opensoftworks
+-- _G.Notifs notification system
 
+local Players      = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local PlayerGui    = Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local CFG = {
+    duration  = 5,
+    slideTime = 0.35,
+    baseX     = 0.79371,
+    baseY     = 0.87456,
+    notifW    = 0.19155,
+    notifH    = 0.08481,
+    gap       = 0.012,
+}
+
+local existing = PlayerGui:FindFirstChild("CN-Notifs")
+if existing then existing:Destroy() end
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name            = "CN-Notifs"
+ScreenGui.IgnoreGuiInset  = true
+ScreenGui.ScreenInsets    = Enum.ScreenInsets.None
+ScreenGui.ZIndexBehavior  = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn    = false
+ScreenGui.Parent          = PlayerGui
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Name                   = "MainFrame"
+MainFrame.Size                   = UDim2.new(1, 0, 1, 0)
+MainFrame.BackgroundTransparency = 1
+MainFrame.BorderSizePixel        = 0
+MainFrame.Parent                 = ScreenGui
+
+local activeNotifs = {} -- [1] = bottommost/newest
+
+local function slotY(i)
+    return CFG.baseY - (i - 1) * (CFG.notifH + CFG.gap)
+end
+
+local tweenOut = TweenInfo.new(CFG.slideTime, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+local tweenIn  = TweenInfo.new(CFG.slideTime, Enum.EasingStyle.Quint, Enum.EasingDirection.In)
+
+local function repositionAll()
+    for i, entry in ipairs(activeNotifs) do
+        TweenService:Create(entry.frame, tweenOut, {
+            Position = UDim2.new(CFG.baseX, 0, slotY(i), 0)
+        }):Play()
+    end
+end
+
+local function removeEntry(frame)
+    for i, entry in ipairs(activeNotifs) do
+        if entry.frame == frame then
+            table.remove(activeNotifs, i)
+            break
+        end
+    end
+end
+
+local function dismiss(frame)
+    if not (frame and frame.Parent) then return end
+    removeEntry(frame)
+    local t = TweenService:Create(frame, tweenIn, {
+        Position = UDim2.new(1.05, 0, frame.Position.Y.Scale, 0)
+    })
+    t:Play()
+    t.Completed:Connect(function() frame:Destroy() end)
+    repositionAll()
+end
+
+local function buildNotif(iconId, titleText, descText)
+    local f = Instance.new("Frame")
+    f.Name             = "Notifboi"
+    f.BorderSizePixel  = 0
+    f.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
+    f.Size             = UDim2.new(CFG.notifW, 0, CFG.notifH, 0)
+    f.Position         = UDim2.new(1.05, 0, CFG.baseY, 0)
+    f.Parent           = MainFrame
+
+    Instance.new("UICorner", f)
+
+    local stroke = Instance.new("UIStroke", f)
+    stroke.Color = Color3.fromRGB(19, 19, 19)
+
+    local arc = Instance.new("UIAspectRatioConstraint", f)
+    arc.AspectRatio = 4.25
+
+    -- Decorative background texture
+    local deco = Instance.new("ImageLabel", f)
+    deco.BorderSizePixel        = 0
+    deco.BackgroundTransparency = 1
+    deco.ImageTransparency      = 0.96
+    deco.Image                  = "rbxassetid://118007022256212"
+    deco.Size                   = UDim2.new(1, 0, 1, 0)
+
+    local grad = Instance.new("UIGradient", deco)
+    grad.Rotation = 75
+    grad.Color    = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(0,   0,   0  )),
+    }
+
+    -- Icon
+    local icon = Instance.new("ImageLabel", f)
+    icon.Name               = "icon"
+    icon.ZIndex             = 2
+    icon.BorderSizePixel    = 0
+    icon.BackgroundTransparency = 1
+    icon.Image              = tostring(iconId)
+    icon.Size               = UDim2.new(0.12255, 0, 0.52083, 0)
+    icon.Position           = UDim2.new(0.0335,  0, 0.14286, 0)
+    Instance.new("UICorner", icon)
+    Instance.new("UIAspectRatioConstraint", icon)
+
+    -- Title
+    local title = Instance.new("TextLabel", f)
+    title.Name               = "title"
+    title.ZIndex             = 2
+    title.BorderSizePixel    = 0
+    title.BackgroundTransparency = 1
+    title.RichText           = true
+    title.TextXAlignment     = Enum.TextXAlignment.Left
+    title.TextSize           = 15
+    title.FontFace           = Font.new("rbxasset://fonts/families/HighwayGothic.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+    title.TextColor3         = Color3.fromRGB(201, 201, 201)
+    title.Size               = UDim2.new(0.79902, 0, 0.52083, 0)
+    title.Position           = UDim2.new(0.19662, 0, 0.14286, 0)
+    title.Text               = tostring(titleText)
+
+    local titleARC = Instance.new("UIAspectRatioConstraint", title)
+    titleARC.AspectRatio = 6.52
+
+    -- Description
+    local desc = Instance.new("TextLabel", f)
+    desc.Name               = "description"
+    desc.ZIndex             = 2
+    desc.BorderSizePixel    = 0
+    desc.BackgroundTransparency = 1
+    desc.RichText           = true
+    desc.TextXAlignment     = Enum.TextXAlignment.Left
+    desc.TextSize           = 11
+    desc.FontFace           = Font.new("rbxasset://fonts/families/Jura.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic)
+    desc.TextColor3         = Color3.fromRGB(176, 176, 176)
+    desc.Size               = UDim2.new(0.79902, 0, 0.22917, 0)
+    desc.Position           = UDim2.new(0.19662, 0, 0.58929, 0)
+    desc.Text               = tostring(descText)
+
+    local descARC = Instance.new("UIAspectRatioConstraint", desc)
+    descARC.AspectRatio = 14.81818
+
+    return f
+end
+
+-------------------------------------------------- PUBLIC API
+
+_G.Notifs = {}
+
+function _G.Notifs.CreateNotification(options)
+    local iconId   = options.icon        or ""
+    local title    = options.title       or "Notification"
+    local desc     = options.description or ""
+    local duration = options.duration    or CFG.duration
+
+    local frame = buildNotif(iconId, title, desc)
+
+    -- New notifs go to slot 1 (bottom), push existing ones up
+    table.insert(activeNotifs, 1, { frame = frame })
+    repositionAll()
+
+    -- Slide in from the right
+    TweenService:Create(frame, tweenOut, {
+        Position = UDim2.new(CFG.baseX, 0, slotY(1), 0)
+    }):Play()
+
+    -- Auto-dismiss after duration
+    task.delay(duration, function()
+        dismiss(frame)
+    end)
+end
+
+return _G.Notifs
